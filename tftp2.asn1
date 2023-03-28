@@ -1,0 +1,14 @@
+Tftp2 DEFINITIONS IMPLICIT TAGS ::= BEGIN
+
+    Modo ::= ENUMERATED {
+        Octet (0),
+        Netascii (1),
+        Mail (2),
+    }
+
+RRQ ::= SEQUENCE {
+  filename PrintableString,
+  modo Modo
+}
+
+END
