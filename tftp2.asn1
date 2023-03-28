@@ -1,14 +1,34 @@
 Tftp2 DEFINITIONS IMPLICIT TAGS ::= BEGIN
 
     Modo ::= ENUMERATED {
-        Octet (0),
-        Netascii (1),
-        Mail (2),
+        octet (0),
+        netascii (1),
+        mail (2),
     }
 
-RRQ ::= SEQUENCE {
-  filename PrintableString,
-  modo Modo
-}
+    RRQ ::= SEQUENCE {
+        filename PrintableString,
+        modo Modo
+    }
+
+    WRQ ::= SEQUENCE {
+        filename PrintableString,
+        modo Modo
+    }
+
+    DATA ::= SEQUENCE {
+        blocknum INTEGER,
+        body OCTET STRING (SIZE(0..512))
+    }
+
+    ACK ::= SEQUENCE {
+        blocknum INTEGER,
+    }
+
+    Error ::= SEQUENCE {
+        errorcode INTEGER,
+        errmsg PrintableString,
+        body OCTET STRING (SIZE(0..512))
+    }
 
 END
