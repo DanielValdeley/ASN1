@@ -1,34 +1,78 @@
-Tftp2 DEFINITIONS IMPLICIT TAGS ::= BEGIN
+Tftp2 DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-    Modo ::= ENUMERATED {
-        octet (0),
-        netascii (1),
-        mail (2),
-    }
+Modo ::= ENUMERATED {
+    octet (0),
+    netascii (1),
+    mail (2),
+}
 
-    RRQ ::= SEQUENCE {
-        filename PrintableString,
-        modo Modo
-    }
+RRQ ::= SEQUENCE {
+    filename PrintableString,
+    modo Modo
+}
 
-    WRQ ::= SEQUENCE {
-        filename PrintableString,
-        modo Modo
-    }
+WRQ ::= SEQUENCE {
+    filename PrintableString,
+    modo Modo
+}
 
-    DATA ::= SEQUENCE {
-        blocknum INTEGER,
-        body OCTET STRING (SIZE(0..512))
-    }
+DATA ::= SEQUENCE {
+    blocknum INTEGER,
+    body OCTET STRING (SIZE(0..512))
+}
 
-    ACK ::= SEQUENCE {
-        blocknum INTEGER,
-    }
+ACK ::= SEQUENCE {
+    blocknum INTEGER,
+}
 
-    Error ::= SEQUENCE {
-        errorcode INTEGER,
-        errmsg PrintableString,
-        body OCTET STRING (SIZE(0..512))
-    }
+Errorcode ::= ENUMERATED {
+    notdefined (0),
+    filenotfound (1),
+    accessviolation (2),
+    diskfull (3),
+    illegal (4),
+    unknown (5),
+    filealready (6),
+    nosuchuser (7)
+}
+
+Err ::= SEQUENCE {
+    code Errorcode,
+    errmsg VisibleString,
+}
+
+MensagemTftp ::= CHOICE {
+    rrq RRQ,
+    wrq WRQ,
+    data DATA,
+    ack ACK,
+    err Err,
+    list PathMsg,
+    listResp listResponse
+}
+
+PathMsg ::= VisibleString
+
+Pasta ::= VisibleString
+
+Arquivo se{
+    nome 
+    tam
+}
+
+listItem :: = CHOICE {
+    Arq Arquivo,
+    dir Pasta
+}
+
+listResponse ::= SEQUENCE {
+    intes SEQUENCE of listItem
+}
+
+MOVE :: SEQUENCE {
+    src 
+    dest
+}
+
 
 END
