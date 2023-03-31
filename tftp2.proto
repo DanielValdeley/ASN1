@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package tftp2;
+
+enum Modo {
+        Octet = 0;
+        Netascii = 1;
+        Mail = 2;
+}
+
+message Transfer {
+        required string filename = 1;
+        required Modo modo = 2 [default = octet];
+}
+
+message Data {
+        required int32 blocknum = 1;
+        required bytes body = 2;
+}
+
+message Ack {
+        required int32 blocknum = 1;
+}
+
+enum ErrorCode {
+        undefined = 0
+}
+
+message TftpMessage {
+        oneof msg {
+                Transfer rrq = 1;
+                Transfer wrq = 2;
+                Transfer data = 3;
+                Ack ack = 4;
+        }
+}
