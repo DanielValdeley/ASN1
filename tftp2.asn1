@@ -1,78 +1,74 @@
 Tftp2 DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-Modo ::= ENUMERATED {
+  Modo ::= ENUMERATED {
     octet (0),
     netascii (1),
-    mail (2),
-}
-
-RRQ ::= SEQUENCE {
+    mail (2)
+  }
+  
+  Transfer ::= SEQUENCE {
     filename PrintableString,
-    modo Modo
-}
+    modo Modo 
+  }
 
-WRQ ::= SEQUENCE {
-    filename PrintableString,
-    modo Modo
-}
-
-DATA ::= SEQUENCE {
+  Data ::= SEQUENCE {
     blocknum INTEGER,
     body OCTET STRING (SIZE(0..512))
-}
+  }
 
-ACK ::= SEQUENCE {
-    blocknum INTEGER,
-}
+  Ack ::= SEQUENCE {
+    blocknum INTEGER
+  }  
 
-Errorcode ::= ENUMERATED {
-    notdefined (0),
-    filenotfound (1),
-    accessviolation (2),
-    diskfull (3),
-    illegal (4),
-    unknown (5),
-    filealready (6),
-    nosuchuser (7)
-}
+  ErrorCode ::= ENUMERATED {
+    undefined (0),
+    fileNotFound (1),
+    accessViolation (2),
+    notEnoughSpace (3),
+    illegalOperation (4),
+    unknownTID (5),
+    fileExists (6),
+    unknownUser (7)
+  }
+  
 
-Err ::= SEQUENCE {
-    code Errorcode,
-    errmsg VisibleString,
-}
+  Err ::= SEQUENCE {
+    code ErrorCode,
+    descr VisibleString
+  }
 
-MensagemTftp ::= CHOICE {
-    rrq RRQ,
-    wrq WRQ,
-    data DATA,
-    ack ACK,
-    err Err,
-    list PathMsg,
-    listResp listResponse
-}
+  PathMsg ::= VisibleString
+  
+  Pasta ::= VisibleString
 
-PathMsg ::= VisibleString
+  Arquivo ::= SEQUENCE {
+    nome VisibleString,
+    tamanho INTEGER
+  }
 
-Pasta ::= VisibleString
+  ListItem ::= CHOICE {
+      arq Arquivo,
+      dir Pasta
+  }
 
-Arquivo se{
-    nome 
-    tam
-}
+  ListResponse ::= SEQUENCE {
+    itens SEQUENCE OF ListItem
+  }
 
-listItem :: = CHOICE {
-    Arq Arquivo,
-    dir Pasta
-}
+  MOVE ::= SEQUENCE {
+    src VisibleString,
+    dest VisibleString OPTIONAL
+  }
 
-listResponse ::= SEQUENCE {
-    intes SEQUENCE of listItem
-}
-
-MOVE :: SEQUENCE {
-    src 
-    dest
-}
-
-
-END
+  MensagemTftp ::= CHOICE {
+      rrq Transfer,
+      wrq Transfer,
+      data Data,
+      ack Ack, 
+      err Err,
+      list PathMsg,
+      listResp ListResponse,
+      mkdir PathMsg,
+      move MOVE
+  }
+END  
