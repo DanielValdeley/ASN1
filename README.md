@@ -1,4 +1,4 @@
-### ASN1
+### Método de serialização e deserialização de dados
 
 - [ASN1](/tftp2.asn1)
 
@@ -22,4 +22,4 @@ A nova versão do TFTP precisará também destas novas mensagens:
             Erro: mensagem Err com um código de erro e ErrMsg contendo uma breve descrição
 
 
-[Referencia](https://moodle.ifsc.edu.br/mod/page/view.php?id=715227&forceview=1) - Tutorial
+[Tutorial](https://moodle.ifsc.edu.br/mod/page/view.php?id=715227&forceview=1) - Tutorial ASN1
