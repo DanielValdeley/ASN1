@@ -23,7 +23,48 @@ message Ack {
 }
 
 enum ErrorCode {
-        undefined = 0
+        undefined =0;
+        fileNotFound = 1;
+        accessViolation = 2;
+        notEnoughSpace = 3;
+        illegalOperation = 4;
+        unknownTID = 5;
+        fileExists = 6;
+        unknownUser = 7;
+}
+
+message Err {
+        required ErrorCode errorCode = 1;
+        required string descr = 2;
+}
+
+message PathMsg {
+        required string pathmsg = 1;
+}
+
+message Pasta { 
+        required string pasta = 1;
+}
+
+message Arquivo {
+        required string nome = 1;
+        required int64 tamanho = 2;
+}
+
+message ListItem {
+        oneof item {
+                required Arquivo arq = 1;
+                required Pasta dir = 2;
+        }
+}
+
+message ListResponse {
+        repeated ListItem itens = 1;
+}
+
+message Move {
+        required string src = 1;
+        optional string dst = 2;
 }
 
 message TftpMessage {
@@ -32,5 +73,10 @@ message TftpMessage {
                 Transfer wrq = 2;
                 Transfer data = 3;
                 Ack ack = 4;
+                Err err = 5;
+                PathMsg list = 6;
+                ListResponse listResp = 7;
+                PathMsg mkdir = 8;
+                Move move = 9;
         }
 }
