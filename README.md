@@ -1,5 +1,9 @@
 ### ASN1
 
+- [ASN1](/tftp2.asn1)
+
+- [Protocol Buffers](/tftp2.proto)
+
 A nova versão do TFTP precisará também destas novas mensagens:
 
     LIST: fazer listagem de uma pasta. Seu formato deve ser: caminho (string)

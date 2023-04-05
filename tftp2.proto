@@ -1,4 +1,4 @@
-syntax = "proto3";
+syntax = "proto2";
 
 package tftp2;
 
@@ -10,7 +10,7 @@ enum Modo {
 
 message Transfer {
         required string filename = 1;
-        required Modo modo = 2 [default = octet];
+        required Modo modo = 2;
 }
 
 message Data {
@@ -53,8 +53,8 @@ message Arquivo {
 
 message ListItem {
         oneof item {
-                required Arquivo arq = 1;
-                required Pasta dir = 2;
+                Arquivo arq = 1;
+                Pasta dir = 2;
         }
 }
 
