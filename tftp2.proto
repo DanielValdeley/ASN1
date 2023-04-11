@@ -71,7 +71,7 @@ message TftpMessage {
         oneof msg {
                 Transfer rrq = 1;
                 Transfer wrq = 2;
-                Transfer data = 3;
+                Data data = 3;
                 Ack ack = 4;
                 Err err = 5;
                 PathMsg list = 6;
